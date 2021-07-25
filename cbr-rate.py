@@ -9,7 +9,7 @@ from progress.bar import Bar
 
 
 def main():
-    '''Create and write report with rate and currency. Adding status bar'''
+    """Create and write report with rate and currency. Adding status bar"""
     date_create = datetime.datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
     xml_url_template = 'https://www.cbr.ru/scripts/XML_daily.asp?date_req='
     create_report(date_create)
@@ -28,7 +28,7 @@ def main():
 
 
 def create_report(date_create):
-    '''Create csv file for rate export'''
+    """Create csv file for rate export"""
     with open(f'currency_{date_create}.csv', 'a') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(['date', 'currency_code', 'rate'])
@@ -36,7 +36,7 @@ def create_report(date_create):
 
 
 def date_range():
-    '''Get date range from argparse'''
+    """Get date range from argparse"""
     parser = argparse.ArgumentParser()
     parser.add_argument("date_range", help="Example: \
                         python3 cbr-rate.py 08/09/2019-12/12/2019")
@@ -51,7 +51,7 @@ def date_range():
 
 
 def read_xml(xml_url):
-    '''Read xml from url cbr'''
+    """Read xml from url cbr"""
     try:
         web_file = urllib.request.urlopen(xml_url)
         data = web_file.read()
@@ -61,7 +61,7 @@ def read_xml(xml_url):
 
 
 def parse_data(data):
-    '''Parsing rate and currency from xml cbr'''
+    """Parsing rate and currency from xml cbr"""
     dom = minidom.parseString(data)
     dom.normalize()
     elements = dom.getElementsByTagName("Valute")
@@ -80,7 +80,7 @@ def parse_data(data):
 
 
 def write_report(currency_dict, date_create, date_rate):
-    '''Write xml parsing result to csv file''' 
+    """Write xml parsing result to csv file""" 
     with open(f'currency_{date_create}.csv', 'a') as csv_file:
         writer = csv.writer(csv_file)
         for char_code, rate in currency_dict.items():
